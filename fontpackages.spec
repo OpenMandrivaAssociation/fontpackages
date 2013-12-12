@@ -4,15 +4,15 @@
 
 Name:    fontpackages
 Version: 1.44
-Release: %mkrel 4
+Release: 9%{?dist}
 Summary: Common directory and macro definitions used by font packages
 
-Group:   Development/X11
+
 # Mostly means the scriptlets inserted via this package do not change the
 # license of the packages they're inserted in
-License:  LGPLv3+
-URL:      http://fedoraproject.org/wiki/fontpackages
-Source0:  http://fedorahosted.org/releases/f/o/%{name}/%{name}-%{version}.tar.xz
+License:   LGPLv3+
+URL:       http://fedoraproject.org/wiki/fontpackages
+Source0:   http://fedorahosted.org/releases/f/o/%{name}/%{name}-%{version}.tar.xz
 
 BuildArch: noarch
 
@@ -25,7 +25,6 @@ and other materials used to create font packages.
 %package filesystem
 Summary: Directories used by font packages
 License: Public Domain
-Group:   Development/X11
 
 %description filesystem
 This package contains the basic directory layout used by font packages,
@@ -34,7 +33,6 @@ including the correct permissions for the directories.
 
 %package devel
 Summary: Templates and macros used to create font packages
-Group:   Development/X11
 
 Requires: rpmdevtools, %{name}-filesystem = %{version}-%{release}
 Requires: fontconfig
@@ -51,16 +49,23 @@ Requires: fontconfig, fontforge
 Requires: curl, make, mutt
 Requires: rpmlint
 
+# repo-font-audit script need to run fedoradev-pkgowners command
+# which is available on Fedora only and not on RHEL.
+%if 0%{?fedora}
+Requires: fedora-packager, yum-utils
+%endif
+
 %description tools
 This package contains tools used to check fonts and font packages
 
 
 %prep
 %setup -q
-
+%if 0%{?rhel}
+sed -i 's|/usr/bin/fedoradev-pkgowners|""|g' bin/repo-font-audit
+%endif
 
 %build
-
 for file in bin/repo-font-audit bin/compare-repo-font-audit ; do
 sed -i "s|^DATADIR\([[:space:]]*\)\?=\(.*\)$|DATADIR=%{_datadir}/%{name}|g" \
   $file
@@ -116,7 +121,7 @@ rm -fr %{buildroot}
 %defattr(0644,root,root,0755)
 %doc license.txt readme.txt
 %config(noreplace) %{spectemplatedir}/*.spec
-%config(noreplace) %{rpmmacrodir}/macros*
+%{rpmmacrodir}/macros*
 %dir %{ftcgtemplatedir}
 %{ftcgtemplatedir}/*conf
 %{ftcgtemplatedir}/*txt
@@ -133,5 +138,3 @@ rm -fr %{buildroot}
 %{_datadir}/%{name}/process-fc-query
 %{_datadir}/%{name}/test-info
 %{_bindir}/*
-
-
