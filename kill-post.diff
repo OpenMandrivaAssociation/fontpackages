@@ -1,0 +1,22 @@
+diff -ru fontpackages-1.44a/rpm/macros.fonts fontpackages-1.44/rpm/macros.fonts
+--- fontpackages-1.44a/rpm/macros.fonts	2010-06-13 16:43:19.000000000 +0200
++++ fontpackages-1.44/rpm/macros.fonts	2013-11-02 02:22:44.190163889 +0100
+@@ -74,17 +74,6 @@
+ 
+ %_font_pkg(n:f:) \
+ %define spn %_font_pkg_name %{-n:%{-n*}} \
+-%post -n %{spn} \
+-if [ -x %{_bindir}/fc-cache ]; then \
+-    %{_bindir}/fc-cache %{_fontdir} || : \
+-fi \
+-\
+-\
+-%postun -n %{spn}  \
+-if [ $1 -eq 0 -a -x %{_bindir}/fc-cache ] ; then \
+-    %{_bindir}/fc-cache %{_fontdir} || : \
+-fi\
+-\
+ \
+ %files -n %{spn} \
+ %defattr(0644,root,root,0755) \
+Seulement dans fontpackages-1.44/rpm: macros.fonts~

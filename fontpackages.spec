@@ -5,12 +5,13 @@
 Summary:	Common directory and macro definitions used by font packages
 Name:		fontpackages
 Version:	1.44
-Release:	11
+Release:	12
 # Mostly means the scriptlets inserted via this package do not change the
 # license of the packages they're inserted in
 License:	LGPLv3+
 URL:		http://fedoraproject.org/wiki/fontpackages
 Source0:	http://fedorahosted.org/releases/f/o/%{name}/%{name}-%{version}.tar.xz
+Patch0:		kill-post.diff
 BuildArch:	noarch
 
 %description
@@ -48,7 +49,10 @@ Requires:	rpmlint
 This package contains tools used to check fonts and font packages.
 
 %prep
-%setup -q
+%autosetup -p1
+
+# prevent packaging /etc/rpm/macros.fonts.0000
+rm -f rpm/macros.fonts.0000
 
 # Drop obosolete %defattr (#1047031)
 sed -i '/^%%defattr/d' rpm/macros.fonts
