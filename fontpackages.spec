@@ -5,7 +5,7 @@
 Summary:	Common directory and macro definitions used by font packages
 Name:		fontpackages
 Version:	1.44
-Release:	12
+Release:	13
 # Mostly means the scriptlets inserted via this package do not change the
 # license of the packages they're inserted in
 License:	LGPLv3+
