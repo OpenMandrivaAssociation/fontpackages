@@ -9,7 +9,7 @@ Release:	13
 # Mostly means the scriptlets inserted via this package do not change the
 # license of the packages they're inserted in
 License:	LGPLv3+
-URL:		http://fedoraproject.org/wiki/fontpackages
+URL:		https://fedoraproject.org/wiki/fontpackages
 Source0:	http://fedorahosted.org/releases/f/o/%{name}/%{name}-%{version}.tar.xz
 Patch0:		kill-post.diff
 BuildArch:	noarch
